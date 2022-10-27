@@ -14,5 +14,9 @@ This project was created mainly with my needs in mind, but as it is a fridge, th
 - As a user, you can **add** food items into the fridge.
 - As a user, you can **remove** food items from the fridge.
 - As a user, you can **view** all the food items that are inside the fridge.
-- As a user, you can **select** a food item and check its description *(name, food group, amount, expiration days left)*
 - As a user, you can **input** an ingredients list and check if the fridge **contains** the given food items.
+
+**Phase 2 - Saving User Stories**
+
+- As a user, I want to be able to save my fridge to file
+- As a user, I want to be able to load my fridge from file
