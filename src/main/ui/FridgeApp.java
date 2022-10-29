@@ -4,14 +4,29 @@ package ui;
 import model.Food;
 import model.Fridge;
 
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FridgeApp {
+    private static final String JSON_STORE = "./data/fridge.json";
     private Fridge fridge;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
 
     // EFFECTS:runs the fridge application
-    public FridgeApp() {
+    public FridgeApp() throws FileNotFoundException {
+        input = new Scanner(System.in);
+        fridge = new Fridge();
+        input.useDelimiter("\n");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runFridge();
     }
 
@@ -20,8 +35,6 @@ public class FridgeApp {
     private void runFridge() {
         boolean keepGoing = true;
         String command;
-
-        init();
 
         while (keepGoing) {
             displayMenu();
@@ -46,19 +59,17 @@ public class FridgeApp {
             doRemove();
         } else if (command.equals("c")) {
             doContains();
-        /*} else if (command.equals("e")) {
-            doExpired();*/
+        } else if (command.equals("e")) {
+            doExpired();
+        } else if (command.equals("v")) {
+            doView();
+        } else if (command.equals("s")) {
+            saveFridge();
+        } else if (command.equals("l")) {
+            loadFridge();
         } else {
             System.out.println("Invalid selection!");
         }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: initializes the fridge
-    private void init() {
-        fridge = new Fridge();
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
     }
 
     // EFFECTS: displays all the options for users
@@ -67,7 +78,10 @@ public class FridgeApp {
         System.out.println("\ta -> Add a new food item");
         System.out.println("\tr -> Remove the oldest food item");
         System.out.println("\tc -> Check if you have a food item in fridge");
-        System.out.println("\te -> Remove expired food from the fridge");
+        System.out.println("\te -> Throw all expired food out of fridge");
+        System.out.println("\tv -> View the fridge contents");
+        System.out.println("\ts -> Save the current fridge");
+        System.out.println("\tl -> Load a fridge file");
         System.out.println("\tq -> Quit the fridge app");
     }
 
@@ -91,7 +105,6 @@ public class FridgeApp {
         } else {
             Food food = new Food(name, size, daysBeforeExpire);
             fridge.add(food);
-            System.out.println(name + " has been successfully added into the fridge!");
         }
     }
 
@@ -102,7 +115,7 @@ public class FridgeApp {
         String name = input.next();
         name = name.toLowerCase();
         if (fridge.containsName(name)) {
-            fridge.remove(name);
+            fridge.removeFood(name);
             System.out.println(name + " has been successfully removed from the fridge.");
         } else {
             System.out.println(name + " was not found.");
@@ -120,10 +133,42 @@ public class FridgeApp {
         }
     }
 
+    // EFFECTS: print the contents of the fridge
+    private void doView() {
+        ArrayList<Food> fridgeContent = fridge.getListOfFood();
+        System.out.println("Fridge Space Left: " + fridge.getFridgeSpace());
+        for (Food f : fridgeContent) {
+            System.out.println(f.getName() + " - Expiring in " + f.getDaysBeforeExpire() + " days!");
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: remove all expired food items from the fridge
-    /* private void doExpired() {
-        fridge.hasExpired();
-    }*/
+    private void doExpired() {
+        fridge.expired();
+    }
+
+    // EFFECTS: saves the fridge to file
+    private void saveFridge() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(fridge);
+            jsonWriter.close();
+            System.out.println("Saved Fridge" + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads fridge from file
+    private void loadFridge() {
+        try {
+            fridge = jsonReader.read();
+            System.out.println("Loaded Fridge" + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
 
 }

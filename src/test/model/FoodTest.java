@@ -9,12 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class FoodTest {
     private  Food testFood;
     @BeforeEach
-    void runBefore() {testFood = new Food("Yam",10,99);}
+    void runBefore() {testFood = new Food("yam",10,99);}
 
     @Test
     void TestConstructor() {
-        assertEquals("Yam",testFood.getName());
-        assertEquals(10,testFood.getSize());
+        assertEquals("yam",testFood.getName());
+        assertEquals(10,testFood.getFoodSize());
         assertEquals(99,testFood.getDaysBeforeExpire());
     }
 

@@ -1,0 +1,20 @@
+{
+    "listOfFood": [
+        {
+            "foodSize": 25,
+            "name": "pizza",
+            "daysBeforeExpire": 15
+        },
+        {
+            "foodSize": 15,
+            "name": "milk",
+            "daysBeforeExpire": 5
+        },
+        {
+            "foodSize": 2,
+            "name": "apple",
+            "daysBeforeExpire": 20
+        }
+    ],
+    "fridgeSpace": 58
+}
