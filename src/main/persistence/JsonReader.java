@@ -58,7 +58,7 @@ public class JsonReader {
     }
 
     // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to the fridge
+    // EFFECTS: parses Food from JSON object and adds it to the listOfFood, with daysBeforeExpire reduced by 1
     private void addFood(Fridge fridge, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         int foodSize = jsonObject.getInt("foodSize");

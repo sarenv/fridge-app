@@ -76,7 +76,7 @@ public class FridgeApp {
     private void displayMenu() {
         System.out.println("\nWhat do you want to do?");
         System.out.println("\ta -> Add a new food item");
-        System.out.println("\tr -> Remove the oldest food item");
+        System.out.println("\tr -> Remove the oldest of a given food item");
         System.out.println("\tc -> Check if you have a food item in fridge");
         System.out.println("\te -> Throw all expired food out of fridge");
         System.out.println("\tv -> View the fridge contents");
@@ -105,6 +105,7 @@ public class FridgeApp {
         } else {
             Food food = new Food(name, size, daysBeforeExpire);
             fridge.add(food);
+
         }
     }
 
