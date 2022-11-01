@@ -128,7 +128,7 @@ public class FridgeApp {
         System.out.println("What is the name of the food to check if the fridge contains?");
         String name = input.next();
         if (fridge.containsName(name)) {
-            System.out.println("Yes! The fridge contains:" + name);
+            System.out.println("Yes! The fridge contains: " + name);
         } else {
             System.out.println("No! The fridge does not contain this item.");
         }

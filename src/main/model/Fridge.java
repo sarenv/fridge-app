@@ -12,12 +12,14 @@ public class Fridge implements Writable {
     private ArrayList<Food> listOfFood;
     private int fridgeSpace;
 
+    // EFFECTS: Create fridge with fridgeSpace as MAX_FRIDGE_SPACE and a list of food
     public Fridge() {
         fridgeSpace = MAX_FRIDGE_SPACE;
         listOfFood = new ArrayList<>();
 
     }
 
+    // EFFECTS: Create a fridge with a given fridgeSpace and a list of food
     public Fridge(int size) {
         fridgeSpace = size;
         listOfFood = new ArrayList<>();

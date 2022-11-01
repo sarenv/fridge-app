@@ -1,0 +1,20 @@
+{
+    "listOfFood": [
+        {
+            "foodSize": 3,
+            "name": "carrot",
+            "daysBeforeExpire": 25
+        },
+        {
+            "foodSize": 1,
+            "name": "apple",
+            "daysBeforeExpire": 36
+        },
+        {
+            "foodSize": 5,
+            "name": "peach",
+            "daysBeforeExpire": 1
+        }
+    ],
+    "fridgeSpace": 91
+}
