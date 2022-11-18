@@ -18,6 +18,7 @@ public class JsonWriter {
         this.destination = destination;
     }
 
+
     // MODIFIES: this
     // EFFECTS: opens writer and throw FileNotFoundException if destination file is not found
     public void open() throws FileNotFoundException {
@@ -43,5 +44,6 @@ public class JsonWriter {
     private void saveToFile(String json) {
         writer.print(json);
     }
+
 
 }

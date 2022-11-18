@@ -1,8 +1,4 @@
 {
-    "listOfFood": [{
-        "foodSize": 6,
-        "name": "apple",
-        "daysBeforeExpire": 6
-    }],
-    "fridgeSpace": 94
+    "listOfFood": [],
+    "fridgeSpace": 100
 }
