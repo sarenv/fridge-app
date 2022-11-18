@@ -47,8 +47,9 @@ public class Fridge implements Writable {
             addFoodToList(food);
             fridgeSpace -= food.getFoodSize();
             System.out.println(food.getName() + " has been successfully added into the fridge!");
+        } else {
+            System.out.println("Fridge cannot take in food of that size!");
         }
-        System.out.println("Fridge cannot take in food of that size!");
     }
 
 

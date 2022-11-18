@@ -4,6 +4,7 @@ import model.Food;
 import model.Fridge;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.graphical.panels.AddPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -99,7 +100,15 @@ public class FridgeUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            Food food = new Food("Name",2,4);
+            JOptionPane optionPane = null;
+
+            String name = JOptionPane.showInputDialog(null, new AddPanel(), "Input Food Name",
+                    JOptionPane.PLAIN_MESSAGE);
+            int size = Integer.parseInt(JOptionPane.showInputDialog(null,
+                    new AddPanel(), "Input Food Size", JOptionPane.PLAIN_MESSAGE));
+            int days = Integer.parseInt(JOptionPane.showInputDialog(null,
+                    new AddPanel(), "Input Days Before Food Expires", JOptionPane.PLAIN_MESSAGE));
+            Food food = new Food(name, size, days);
             try {
                 fridge.add(food);
             } catch (Exception e) {
@@ -117,9 +126,10 @@ public class FridgeUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            Food food = new Food("Name",2,4);
+            String name = JOptionPane.showInputDialog(null, null, "Input Food Name",
+                    JOptionPane.PLAIN_MESSAGE);
             try {
-                fridge.removeFood(food.getName());
+                fridge.removeFood(name);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
                         JOptionPane.ERROR_MESSAGE);
@@ -136,8 +146,8 @@ public class FridgeUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             saveFridge();
-            JOptionPane.showMessageDialog(null,"Fridge saved Successfully!",
-                    "Save Successful",JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Fridge saved Successfully!",
+                    "Save Successful", JOptionPane.PLAIN_MESSAGE);
         }
     }
 
@@ -150,8 +160,8 @@ public class FridgeUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             loadFridge();
-            JOptionPane.showMessageDialog(null,"Fridge loaded successfully!",
-                    "Load Successful",JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Fridge loaded successfully!",
+                    "Load Successful", JOptionPane.PLAIN_MESSAGE);
         }
     }
 

@@ -23,7 +23,6 @@ public class FridgeApp {
 
     // EFFECTS:runs the fridge application
     public FridgeApp() throws FileNotFoundException {
-        new FridgeUI();
         input = new Scanner(System.in);
         fridge = new Fridge();
         input.useDelimiter("\n");
