@@ -19,12 +19,18 @@ public class FridgeUI extends JFrame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
+    JPanel spacePanel;
+    JProgressBar fridgeSpaceBar;
+    JLabel fridgeSpaceLabel;
+    JLabel fridgeSpaceNumber;
+
     JButton addButton;
     JButton removeButton;
     JButton saveButton;
     JButton loadButton;
     JButton viewButton;
 
+    // EFFECTS: Creates a FridgeUI with title "Fridge Application", a fridge, JSon methods and accompanied graphics
     public FridgeUI() {
         super("Fridge Application");
         fridge = new Fridge();
@@ -36,11 +42,11 @@ public class FridgeUI extends JFrame {
 
 
     // MODIFIES: this
-    // EFFECTS:  draws the JFrame window where this DrawingEditor will operate, and populates the tools to be used
-    //           to manipulate this drawing
+    // EFFECTS:  draws the JFrame in which this FridgeUI will operate and the accompanying panels and actions
     private void initialiseGraphics() {
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        createSpacePanel();
         createActions();
         setLocationRelativeTo(null);
         pack();
@@ -49,7 +55,37 @@ public class FridgeUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS:  a helper method which declares and instantiates all tools
+    // EFFECTS: a helper which declares and initiates the fridge space progress bar
+    private void createSpacePanel() {
+        spacePanel = new JPanel();
+        spacePanel.setLayout(new FlowLayout());
+
+        fridgeSpaceLabel = new JLabel("Fridge Space Left:");
+        spacePanel.add(fridgeSpaceLabel);
+
+        fridgeSpaceBar = new JProgressBar(0,fridge.MAX_FRIDGE_SPACE);
+        spacePanel.add(fridgeSpaceBar);
+        fridgeSpaceBar.setString("FRIDGE IS FULL");
+
+        fridgeSpaceNumber = new JLabel(Integer.toString(fridge.getFridgeSpace()));
+        spacePanel.add(fridgeSpaceNumber);
+
+        updateFridgeSpaceBar();
+
+        add(spacePanel,BorderLayout.NORTH);
+
+    }
+
+    // EFFECTS: updates the fridgeSpaceBar and the fridgeSpaceNumber to the current value in fridge.getFridgeSpace()
+    private void updateFridgeSpaceBar() {
+        int fridgeSpace = 100 - fridge.getFridgeSpace();
+        fridgeSpaceBar.setValue(fridgeSpace);
+        fridgeSpaceNumber.setText(Integer.toString(fridge.getFridgeSpace()));
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS:  a helper method which declares and instantiates all actions
     private void createActions() {
         JPanel actionArea = new JPanel();
         actionArea.setLayout(new GridLayout(0, 1));
@@ -93,6 +129,7 @@ public class FridgeUI extends JFrame {
         }
     }
 
+    // Represents the Action taken to add one Food to Fridge
     private class AddAction extends AbstractAction {
 
         AddAction() {
@@ -109,6 +146,7 @@ public class FridgeUI extends JFrame {
             Food food = new Food(name, size, daysBeforeExpire);
             try {
                 fridge.add(food);
+                updateFridgeSpaceBar();
                 JOptionPane.showMessageDialog(null, name + " was added successfully!",
                         "Add Successful", JOptionPane.PLAIN_MESSAGE);
 
@@ -119,7 +157,7 @@ public class FridgeUI extends JFrame {
         }
     }
 
-
+    // Represents the Action taken to remove a specific Food from Fridge
     private class RemoveAction extends AbstractAction {
 
         RemoveAction() {
@@ -130,10 +168,18 @@ public class FridgeUI extends JFrame {
         public void actionPerformed(ActionEvent evt) {
             String name = JOptionPane.showInputDialog(null, null, "Input Food Name",
                     JOptionPane.PLAIN_MESSAGE);
+            name = name.toLowerCase();
             try {
+                int currentFridgeSpace = fridge.getFridgeSpace();
                 fridge.removeFood(name);
-                JOptionPane.showMessageDialog(null, name + " was removed successfully!",
-                        "Remove Successful", JOptionPane.PLAIN_MESSAGE);
+                updateFridgeSpaceBar();
+                if (currentFridgeSpace == (fridge.getFridgeSpace())) {
+                    JOptionPane.showMessageDialog(null, "There is no " + name + " in the fridge!",
+                            "Remove Successful", JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, name + " was removed successfully!",
+                            "Remove Successful", JOptionPane.PLAIN_MESSAGE);
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
                         JOptionPane.ERROR_MESSAGE);
@@ -141,34 +187,39 @@ public class FridgeUI extends JFrame {
         }
     }
 
+    // Represents the Action taken to save the Fridge
     private class SaveAction extends AbstractAction {
 
         SaveAction() {
-            super("Save the Fridge");
+            super("Save Fridge");
         }
 
         @Override
         public void actionPerformed(ActionEvent evt) {
             saveFridge();
+            updateFridgeSpaceBar();
             JOptionPane.showMessageDialog(null, "Fridge saved Successfully!",
                     "Save Successful", JOptionPane.PLAIN_MESSAGE);
         }
     }
 
+    // Represents the Action taken to load up a saved Fridge
     private class LoadAction extends AbstractAction {
 
         LoadAction() {
-            super("Load a Fridge");
+            super("Load Fridge");
         }
 
         @Override
         public void actionPerformed(ActionEvent evt) {
             loadFridge();
+            updateFridgeSpaceBar();
             JOptionPane.showMessageDialog(null, "Fridge loaded successfully!",
                     "Load Successful", JOptionPane.PLAIN_MESSAGE);
         }
     }
 
+    // Represents the Action taken to view the contents of the Fridge
     private class ViewAction extends AbstractAction {
 
         ViewAction() {
@@ -196,6 +247,8 @@ public class FridgeUI extends JFrame {
 
 
     // HELPERS for AddAction
+
+    // EFFECTS: Prompts the user to input daysBeforeExpire and makes sure daysBeforeExpire is > 0
     private int inputDaysBeforeExpire() {
         int daysBeforeExpire = Integer.parseInt(JOptionPane.showInputDialog(
                 null,
@@ -215,6 +268,7 @@ public class FridgeUI extends JFrame {
         return daysBeforeExpire;
     }
 
+    // EFFECTS: Prompts the user to input Size and makes sure that size < fridge.getFridgeSpace() and size > 0
     private int inputSize() {
         int size = Integer.parseInt(JOptionPane.showInputDialog(
                 null,
@@ -241,11 +295,13 @@ public class FridgeUI extends JFrame {
         return size;
     }
 
+    // EFFECTS: Prompts user to input the foodName
     private String inputName() {
-        return JOptionPane.showInputDialog(
+        String name = JOptionPane.showInputDialog(
                 null,
                 "Enter the Food's Name",
                 "Food Name",
                 JOptionPane.PLAIN_MESSAGE);
+        return name.toLowerCase();
     }
 }
