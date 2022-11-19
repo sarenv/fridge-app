@@ -43,12 +43,9 @@ public class Fridge implements Writable {
     // MODIFIES: this
     // EFFECTS: add given food to the listOfFood in fridge and reduce fridge space by the size of the food
     public void add(Food food) {
-        if (food.getFoodSize() < fridgeSpace) {
+        if (food.getFoodSize() <= fridgeSpace) {
             addFoodToList(food);
             fridgeSpace -= food.getFoodSize();
-            System.out.println(food.getName() + " has been successfully added into the fridge!");
-        } else {
-            System.out.println("Fridge cannot take in food of that size!");
         }
     }
 

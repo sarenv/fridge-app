@@ -4,13 +4,14 @@ import model.Food;
 import model.Fridge;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-import ui.graphical.panels.AddPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+
 
 public class FridgeUI extends JFrame {
     private static final String JSON_STORE = "./data/fridge.json";
@@ -176,10 +177,23 @@ public class FridgeUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            ArrayList<Food> fridgeContent = fridge.getListOfFood();
+            ArrayList<String> foods = new ArrayList<>();
 
+            for (Food f : fridgeContent) {
+                String food = f.getName() + " [" + f.getFoodSize() + "] "
+                        + "- Expiring in " + f.getDaysBeforeExpire() + " days!";
+                foods.add(food);
+            }
+
+            String[] foodR = new String[foods.size()];
+            foods.toArray(foodR);
+            add(new JList(foodR));
+            pack();
 
         }
     }
+
 
     // HELPERS for AddAction
     private int inputDaysBeforeExpire() {
@@ -209,9 +223,14 @@ public class FridgeUI extends JFrame {
                 JOptionPane.PLAIN_MESSAGE));
 
 
-        while (size > fridge.getFridgeSpace()) {
-            JOptionPane.showMessageDialog(null, "Size too big for Fridge!",
-                    "Add Unsuccessful!", JOptionPane.PLAIN_MESSAGE);
+        while (size > fridge.getFridgeSpace() || size < 1) {
+            if (size < 1) {
+                JOptionPane.showMessageDialog(null, "Size must be greater than zero!",
+                        "Add Unsuccessful!", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Size too big for Fridge!",
+                        "Add Unsuccessful!", JOptionPane.PLAIN_MESSAGE);
+            }
             size = Integer.parseInt(JOptionPane.showInputDialog(
                     null,
                     "Enter the Food's Size",
@@ -223,11 +242,10 @@ public class FridgeUI extends JFrame {
     }
 
     private String inputName() {
-        String name = JOptionPane.showInputDialog(
+        return JOptionPane.showInputDialog(
                 null,
                 "Enter the Food's Name",
                 "Food Name",
                 JOptionPane.PLAIN_MESSAGE);
-        return name;
     }
 }

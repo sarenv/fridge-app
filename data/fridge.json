@@ -1,4 +1,15 @@
 {
-    "listOfFood": [],
-    "fridgeSpace": 100
+    "listOfFood": [
+        {
+            "foodSize": 2,
+            "name": "Fig",
+            "daysBeforeExpire": 10
+        },
+        {
+            "foodSize": 10,
+            "name": "Cat Food",
+            "daysBeforeExpire": 5
+        }
+    ],
+    "fridgeSpace": 88
 }
