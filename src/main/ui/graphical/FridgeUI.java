@@ -100,23 +100,24 @@ public class FridgeUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            JOptionPane optionPane = null;
 
-            String name = JOptionPane.showInputDialog(null, new AddPanel(), "Input Food Name",
-                    JOptionPane.PLAIN_MESSAGE);
-            int size = Integer.parseInt(JOptionPane.showInputDialog(null,
-                    new AddPanel(), "Input Food Size", JOptionPane.PLAIN_MESSAGE));
-            int days = Integer.parseInt(JOptionPane.showInputDialog(null,
-                    new AddPanel(), "Input Days Before Food Expires", JOptionPane.PLAIN_MESSAGE));
-            Food food = new Food(name, size, days);
+            String name = inputName();
+            int size = inputSize();
+            int daysBeforeExpire = inputDaysBeforeExpire();
+
+            Food food = new Food(name, size, daysBeforeExpire);
             try {
                 fridge.add(food);
+                JOptionPane.showMessageDialog(null, name + " was added successfully!",
+                        "Add Successful", JOptionPane.PLAIN_MESSAGE);
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
                         JOptionPane.ERROR_MESSAGE);
             }
         }
     }
+
 
     private class RemoveAction extends AbstractAction {
 
@@ -130,6 +131,8 @@ public class FridgeUI extends JFrame {
                     JOptionPane.PLAIN_MESSAGE);
             try {
                 fridge.removeFood(name);
+                JOptionPane.showMessageDialog(null, name + " was removed successfully!",
+                        "Remove Successful", JOptionPane.PLAIN_MESSAGE);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
                         JOptionPane.ERROR_MESSAGE);
@@ -176,5 +179,55 @@ public class FridgeUI extends JFrame {
 
 
         }
+    }
+
+    // HELPERS for AddAction
+    private int inputDaysBeforeExpire() {
+        int daysBeforeExpire = Integer.parseInt(JOptionPane.showInputDialog(
+                null,
+                "Enter the Food's Days Before Expiring",
+                "Days Before Expire",
+                JOptionPane.PLAIN_MESSAGE));
+
+        while (daysBeforeExpire < 1) {
+            JOptionPane.showMessageDialog(null, "DaysBeforeExpire must be greater than 0!",
+                    "Add Unsuccessful!", JOptionPane.PLAIN_MESSAGE);
+            daysBeforeExpire = Integer.parseInt(JOptionPane.showInputDialog(
+                    null,
+                    "Enter the Food's Days Before Expiring",
+                    "Days Before Expire",
+                    JOptionPane.PLAIN_MESSAGE));
+        }
+        return daysBeforeExpire;
+    }
+
+    private int inputSize() {
+        int size = Integer.parseInt(JOptionPane.showInputDialog(
+                null,
+                "Enter the Food's Size",
+                "Food Size",
+                JOptionPane.PLAIN_MESSAGE));
+
+
+        while (size > fridge.getFridgeSpace()) {
+            JOptionPane.showMessageDialog(null, "Size too big for Fridge!",
+                    "Add Unsuccessful!", JOptionPane.PLAIN_MESSAGE);
+            size = Integer.parseInt(JOptionPane.showInputDialog(
+                    null,
+                    "Enter the Food's Size",
+                    "Food Size",
+                    JOptionPane.PLAIN_MESSAGE));
+        }
+
+        return size;
+    }
+
+    private String inputName() {
+        String name = JOptionPane.showInputDialog(
+                null,
+                "Enter the Food's Name",
+                "Food Name",
+                JOptionPane.PLAIN_MESSAGE);
+        return name;
     }
 }
