@@ -4,6 +4,7 @@ import model.Food;
 import model.Fridge;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.LogPrinter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +31,8 @@ public class FridgeUI extends JFrame {
     JButton loadButton;
     JButton viewButton;
 
+    JPanel viewPanel;
+
     // EFFECTS: Creates a FridgeUI with title "Fridge Application", a fridge, JSon methods and accompanied graphics
     public FridgeUI() {
         super("Fridge Application");
@@ -46,6 +49,8 @@ public class FridgeUI extends JFrame {
     private void initialiseGraphics() {
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addWindowListener(new LogPrinter());
+
         createSpacePanel();
         createActions();
         setLocationRelativeTo(null);
@@ -228,14 +233,7 @@ public class FridgeUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            ArrayList<Food> fridgeContent = fridge.getListOfFood();
-            ArrayList<String> foods = new ArrayList<>();
-
-            for (Food f : fridgeContent) {
-                String food = f.getName() + " [" + f.getFoodSize() + "] "
-                        + "- Expiring in " + f.getDaysBeforeExpire() + " days!";
-                foods.add(food);
-            }
+            ArrayList<String> foods = fridge.viewFridgeContent();
 
             String[] foodR = new String[foods.size()];
             foods.toArray(foodR);

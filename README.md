@@ -30,3 +30,22 @@ This project was created mainly with my needs in mind, but as it is a fridge, th
 - You can locate my visual component by looking at the top of my FridgeUI. It is a JProgress Bar that tells you the amount of Fridge Space left after each Action.
 - You can save the state of my application by clicking on the "Save Fridge" button.
 - You can reload the state of my application by clicking on the "Load Fridge" button.
+
+**Phase 4 - Task 2**
+
+```
+Fri Dec 02 13:16:06 PST 2022
+pie has been added to the fridge.
+Fri Dec 02 13:16:34 PST 2022
+cheese has been added to the fridge.
+Fri Dec 02 13:16:45 PST 2022
+milk has been added to the fridge.
+Fri Dec 02 13:16:49 PST 2022
+cheese has been removed from the fridge.
+Fri Dec 02 13:16:57 PST 2022
+Viewed the contents of the fridge.
+Fri Dec 02 13:17:02 PST 2022
+pie has been removed from the fridge.
+Fri Dec 02 13:17:04 PST 2022
+Viewed the contents of the fridge.
+```

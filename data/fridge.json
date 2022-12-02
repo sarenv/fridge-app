@@ -1,15 +1,25 @@
 {
     "listOfFood": [
         {
-            "foodSize": 2,
-            "name": "Fig",
-            "daysBeforeExpire": 10
+            "foodSize": 20,
+            "name": "leftovers",
+            "daysBeforeExpire": 0
+        },
+        {
+            "foodSize": 1,
+            "name": "apple",
+            "daysBeforeExpire": 7
         },
         {
             "foodSize": 10,
-            "name": "Cat Food",
+            "name": "pie",
             "daysBeforeExpire": 5
+        },
+        {
+            "foodSize": 2,
+            "name": "tomato",
+            "daysBeforeExpire": 3
         }
     ],
-    "fridgeSpace": 88
+    "fridgeSpace": 67
 }

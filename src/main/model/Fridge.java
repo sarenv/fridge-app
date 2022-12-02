@@ -46,6 +46,7 @@ public class Fridge implements Writable {
         if (food.getFoodSize() <= fridgeSpace) {
             addFoodToList(food);
             fridgeSpace -= food.getFoodSize();
+            EventLog.getInstance().logEvent(new Event(food.getName() + " has been added to the fridge."));
         }
     }
 
@@ -66,6 +67,7 @@ public class Fridge implements Writable {
             Food foodToRemove = listOfFood.get(index);
             fridgeSpace += foodToRemove.getFoodSize();
             listOfFood.remove(foodToRemove);
+            EventLog.getInstance().logEvent(new Event(foodName + " has been removed from the fridge."));
         }
 
     }
@@ -97,6 +99,20 @@ public class Fridge implements Writable {
             }
         }
         fridgeSpace += freedSpace;
+    }
+
+    public ArrayList<String> viewFridgeContent() {
+        ArrayList<Food> fridgeContent = getListOfFood();
+        ArrayList<String> foods = new ArrayList<>();
+
+        for (Food f : fridgeContent) {
+            String food = f.getName() + " [" + f.getFoodSize() + "] "
+                    + "- Expiring in " + f.getDaysBeforeExpire() + " days!";
+            foods.add(food);
+        }
+        EventLog.getInstance().logEvent(new Event("Viewed the contents of the fridge."));
+        return foods;
+
     }
 
     @Override
