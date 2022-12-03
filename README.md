@@ -49,3 +49,13 @@ pie has been removed from the fridge.
 Fri Dec 02 13:17:04 PST 2022
 Viewed the contents of the fridge.
 ```
+
+**Phase 4 - Task 3**
+
+While I am happy that I completed all the phases of the project, there would have been some changes I would have made if I had more time.
+
+For Phase 1, I initially planned to make my `Food` class an abstract class and add five extra classes (Meat, Dairy, Fruits and Veg etc.) on different types of food to implement that class. Each of these classes would have a unique foodSize and DaysBeforeExpire, so when adding food to the fridge, the user does not have to input the size and expiration date. All they have to do is input the name and the type of food.
+
+For Phase 3, there were two main improvements that I wanted to make. First, I wanted to change how I organised my GUI. What I did was I added all of my JPanel and JButton(s) in a single GUI class called `FridgeUI`. My UML diagram shows this, where my FridgeUI does not call any Java Swing classes. Although the programme still works, it made the class too long, and if a user is reading my code for the first time, they would have a hard time understanding my GUI class and how the methods were implemented.
+
+Another stylistic choice I would make is to use JPanels instead of a Pop-up Message Dialog for my “Add/Remove X to Y” user stories. An issue I have is when the user starts inputting the information for Food, if they quit the application without inputting all three prompts (Name, Size and Expiration Date), the application actually stops running. To rectify this, I should have made a new JPanel with JTextfield and call that instead. By doing this, I will have more control over the user’s input and the overall design of the GUI.
