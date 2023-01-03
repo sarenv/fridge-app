@@ -1,25 +1,8 @@
 {
-    "listOfFood": [
-        {
-            "foodSize": 20,
-            "name": "leftovers",
-            "daysBeforeExpire": 0
-        },
-        {
-            "foodSize": 1,
-            "name": "apple",
-            "daysBeforeExpire": 7
-        },
-        {
-            "foodSize": 10,
-            "name": "pie",
-            "daysBeforeExpire": 5
-        },
-        {
-            "foodSize": 2,
-            "name": "tomato",
-            "daysBeforeExpire": 3
-        }
-    ],
-    "fridgeSpace": 67
+    "listOfFood": [{
+        "foodSize": 7,
+        "name": "yes",
+        "daysBeforeExpire": 10
+    }],
+    "fridgeSpace": 93
 }
