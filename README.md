@@ -23,7 +23,7 @@ This project was created mainly with my needs in mind, but as it is a fridge, th
 
 **Phase 3 - GUI**
 
-### Instructions for Grader
+### Instructions
 
 - You can generate the first required event related to adding Xs to a Y **(Adding a Food item to Fridge)** by clicking the "Add Food Item" button. Follow the three subsequent dialog pop-ups to input the Food's name, size and days before expiring respectively.
 - You can generate the second required event related to adding Xs to a Y **(Removing a Food item from Fridge)** by clicking the "Remove a Food Item" button. Follow the dialog pop-up to input a food's name that the user want to remove.
